@@ -1,5 +1,4 @@
 from collections import OrderedDict
-
 from tiny3d.utils.logger import get_logger
 
 class Database(object):
@@ -8,6 +7,7 @@ class Database(object):
         self._global_data_dict = OrderedDict()
         self._data_length = None
         self.logger = get_logger()
+        self._work_dir = ""
 
     def update_data(self, update_dict: dict):
         self._data_dict.update(update_dict)
@@ -16,7 +16,6 @@ class Database(object):
                 self._data_length = len(v)
             elif self._data_length != len(v):
                 self.logger.warn(f"Data length no equal! Length of key {k} is {len(v)}, but database length is {self._data_length}.")
-
 
     def update_global_data(self, update_dict: dict):
         self._global_data_dict.update(update_dict)
@@ -35,3 +34,6 @@ class Database(object):
         if len(v) == 1:
             return v[0]
         return v
+
+    def set_work_dir(self , work_dir :str):
+        self._work_dir = work_dir

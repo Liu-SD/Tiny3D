@@ -3,13 +3,14 @@
         "name": "data_parser",
         "type": "ImageFolderParser",
         "config": {
-            "path": "/home/liu/nerf/dataset/Synthetic_NeRF/Lego"
+            "path": "/home/yzx/TEST/nerf/dataset/Synthetic_NeRF/Lego"
         }
     },
     {
         "name": "sfm",
         "type": "SfMBase",
         "config": {
+            "path": "/home/yzx/GIT/Tiny3D/demo"
         }
     },
     {

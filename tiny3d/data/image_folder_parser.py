@@ -19,12 +19,14 @@ class ImageFolderParser(Module):
         self.path = path
 
     def execute(self):
-        image_name_list = glob(osp.join(self.path, 'rgb', '*.png'))
-        image_list = np.stack([plt.imread(image) for image in image_name_list])
-        intrinsic = self.read_intrinsics()
-        self.database.update_data({"image": image_list})
-        self.database.update_data({"image_name": image_name_list})
-        self.database.update_global_data({"intrinsic": intrinsic})
+        print("ImageFolderParser skipped" )
+        # image_name_list = glob(osp.join(self.path, 'rgb', '*.png'))
+        # image_list = np.stack([plt.imread(image) for image in image_name_list])
+        # intrinsic = self.read_intrinsics()
+        # self.database.update_data({"image": image_list})
+        # self.database.update_data({"image_name": image_name_list})
+        # self.database.set_work_dir(self.path)
+        # self.database.update_global_data({"intrinsic": intrinsic})
 
     def read_intrinsics(self):
         with open(osp.join(self.path, 'intrinsics.txt')) as f:
@@ -35,3 +37,5 @@ class ImageFolderParser(Module):
                         [0, fy, h/2],
                         [0,  0,   1]])
         return K
+
+

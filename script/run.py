@@ -6,6 +6,7 @@ from tiny3d.utils.logger import get_logger
 def main():
     args, pipeline = parse_config()
     logger = get_logger()
+    print(args)
     if args.list_modules:
         print("Current system contains the modules below:")
         for k, v in ModuleFactory.registry.items():
