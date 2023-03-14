@@ -1,4 +1,4 @@
-from pathlib import *
+from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -46,6 +46,7 @@ class SfMBase(Module):
                 t_mat = np.eye(4)
                 t_mat[:3, 3] = -t
                 pose = r.T @ t_mat
+                pose = pose[:3, :] # (4,4) -> (3,4)
                 output_poses_path = output_poses_dir + f"/{name}"
                 np.savetxt(output_poses_path, pose)
                 self.poses.append(pose)
@@ -66,8 +67,8 @@ class SfMBase(Module):
                     continue
                 line = line.split()
                 intrinsic = np.array([float(i) for i in line[2:8]])
-                K = np.float32( [[intrinsic[2],               0,   intrinsic[3]],
-                                [           0,    intrinsic[4],   intrinsic[5]],
+                K = np.float32( [[intrinsic[2],               0,   intrinsic[4]],
+                                [           0,    intrinsic[3],   intrinsic[5]],
                                 [           0,               0,              1]])
                 output_poses_path = output_poses_dir + f"/intrinsic_{cameras_id}.txt"
                 np.savetxt(output_poses_path, K)
@@ -87,7 +88,7 @@ class SfMBase(Module):
         database_path = output_path / "database.db"
 
         if not database_path.exists():
-            pycolmap.extract_features(database_path, image_dir)
+            pycolmap.extract_features(database_path, image_dir, camera_mode='SINGLE', camera_model='PINHOLE')
             pycolmap.match_exhaustive(database_path)
             maps = pycolmap.incremental_mapping(database_path, image_dir, output_path)
             if not (output_path/ "colmap").exists():
